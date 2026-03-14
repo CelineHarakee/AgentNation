@@ -1,0 +1,1316 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "description": "Simulated Saudi Arabia Workforce Database for AgentNation WIS",
+    "base_year": 2024,
+    "currency": "SAR",
+    "population_source": "Simulated based on Vision 2030 targets and public statistics",
+    "last_updated": "2024-01-01"
+  },
+
+  "national_summary": {
+    "total_population": 36000000,
+    "working_age_population": 21000000,
+    "total_labor_force": 15200000,
+    "employed": 14100000,
+    "unemployed": 1100000,
+    "unemployment_rate_overall": 0.072,
+    "saudi_unemployment_rate": 0.082,
+    "female_labor_participation_rate": 0.33,
+    "male_labor_participation_rate": 0.77,
+    "saudization_rate_overall": 0.41,
+    "annual_workforce_growth_rate": 0.03
+  },
+
+  "sectors": {
+
+    "healthcare": {
+      "sector_id": "SEC001",
+      "sector_name": "Healthcare & Medical Services",
+      "vision_2030_priority": "high",
+      "total_budget_SAR": 168000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 89000000000,
+        "infrastructure_and_equipment": 42000000000,
+        "training_and_development": 12000000000,
+        "operations_and_maintenance": 25000000000
+      },
+      "workforce": {
+        "total_employed": 310000,
+        "saudi_nationals": 108500,
+        "expatriates": 201500,
+        "saudization_rate": 0.35,
+        "saudization_target_2030": 0.60,
+        "female_workforce_percentage": 0.44,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 18500,
+          "expatriate": 9800
+        }
+      },
+      "occupational_breakdown": {
+        "physicians_and_surgeons": {
+          "total": 78000,
+          "saudi": 22000,
+          "expatriate": 56000,
+          "demand_gap": 12000,
+          "avg_salary_SAR": 32000
+        },
+        "nurses_and_midwives": {
+          "total": 102000,
+          "saudi": 28000,
+          "expatriate": 74000,
+          "demand_gap": 18000,
+          "avg_salary_SAR": 14000
+        },
+        "pharmacists": {
+          "total": 28000,
+          "saudi": 14000,
+          "expatriate": 14000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 16000
+        },
+        "lab_and_radiology_technicians": {
+          "total": 35000,
+          "saudi": 12000,
+          "expatriate": 23000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 12000
+        },
+        "healthcare_administrators": {
+          "total": 22000,
+          "saudi": 14000,
+          "expatriate": 8000,
+          "demand_gap": 2000,
+          "avg_salary_SAR": 15000
+        },
+        "allied_health_professionals": {
+          "total": 45000,
+          "saudi": 18500,
+          "expatriate": 26500,
+          "demand_gap": 7000,
+          "avg_salary_SAR": 11000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 24000,
+        "training_programs": [
+          {
+            "program": "Medical Residency Programs",
+            "enrollees": 6500,
+            "avg_duration_years": 4,
+            "annual_graduates": 1600,
+            "saudi_percentage": 0.85
+          },
+          {
+            "program": "Nursing Diploma & Degree",
+            "enrollees": 9000,
+            "avg_duration_years": 3,
+            "annual_graduates": 3000,
+            "saudi_percentage": 0.70
+          },
+          {
+            "program": "Pharmacy Programs",
+            "enrollees": 3500,
+            "avg_duration_years": 5,
+            "annual_graduates": 700,
+            "saudi_percentage": 0.80
+          },
+          {
+            "program": "Healthcare Technology & Allied Health",
+            "enrollees": 5000,
+            "avg_duration_years": 2,
+            "annual_graduates": 2500,
+            "saudi_percentage": 0.75
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 8800,
+        "fields": {
+          "medicine_and_surgery": 1600,
+          "nursing": 3000,
+          "pharmacy": 700,
+          "dentistry": 500,
+          "public_health": 800,
+          "biomedical_sciences": 900,
+          "health_informatics": 600,
+          "physiotherapy_and_rehab": 700
+        },
+        "employment_rate_within_1_year": 0.82,
+        "absorption_rate_into_sector": 0.78
+      },
+      "regional_distribution": {
+        "riyadh": 0.30,
+        "makkah_jeddah": 0.25,
+        "eastern_province": 0.18,
+        "madinah": 0.08,
+        "asir": 0.06,
+        "other_regions": 0.13
+      },
+      "skill_shortage_flags": ["specialist_physicians", "icu_nurses", "mental_health_professionals", "health_informatics_experts"],
+      "projected_demand_growth_rate": 0.065
+    },
+
+    "education": {
+      "sector_id": "SEC002",
+      "sector_name": "Education & Academic Institutions",
+      "vision_2030_priority": "high",
+      "total_budget_SAR": 200000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 130000000000,
+        "infrastructure": 35000000000,
+        "training_and_development": 18000000000,
+        "digital_transformation": 17000000000
+      },
+      "workforce": {
+        "total_employed": 620000,
+        "saudi_nationals": 465000,
+        "expatriates": 155000,
+        "saudization_rate": 0.75,
+        "saudization_target_2030": 0.90,
+        "female_workforce_percentage": 0.52,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 14000,
+          "expatriate": 10500
+        }
+      },
+      "occupational_breakdown": {
+        "k12_teachers": {
+          "total": 480000,
+          "saudi": 370000,
+          "expatriate": 110000,
+          "demand_gap": 25000,
+          "avg_salary_SAR": 12500
+        },
+        "university_faculty": {
+          "total": 68000,
+          "saudi": 38000,
+          "expatriate": 30000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 22000
+        },
+        "educational_administrators": {
+          "total": 45000,
+          "saudi": 40000,
+          "expatriate": 5000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 16000
+        },
+        "vocational_trainers": {
+          "total": 27000,
+          "saudi": 17000,
+          "expatriate": 10000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 11000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 38000,
+        "training_programs": [
+          {
+            "program": "Teacher Preparation Programs (Colleges of Education)",
+            "enrollees": 28000,
+            "avg_duration_years": 4,
+            "annual_graduates": 7000,
+            "saudi_percentage": 0.95
+          },
+          {
+            "program": "Graduate Teaching & Academic Programs",
+            "enrollees": 6000,
+            "avg_duration_years": 2,
+            "annual_graduates": 3000,
+            "saudi_percentage": 0.85
+          },
+          {
+            "program": "Vocational Trainer Certification",
+            "enrollees": 4000,
+            "avg_duration_years": 1,
+            "annual_graduates": 4000,
+            "saudi_percentage": 0.90
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 14000,
+        "fields": {
+          "education_and_teaching": 7000,
+          "curriculum_and_instruction": 2000,
+          "educational_technology": 1500,
+          "special_education": 800,
+          "educational_leadership": 1200,
+          "arabic_language_education": 1500
+        },
+        "employment_rate_within_1_year": 0.78,
+        "absorption_rate_into_sector": 0.72
+      },
+      "regional_distribution": {
+        "riyadh": 0.28,
+        "makkah_jeddah": 0.22,
+        "eastern_province": 0.16,
+        "madinah": 0.10,
+        "asir": 0.08,
+        "other_regions": 0.16
+      },
+      "skill_shortage_flags": ["stem_teachers", "special_education_specialists", "edtech_specialists", "vocational_trainers"],
+      "projected_demand_growth_rate": 0.03
+    },
+
+    "information_technology": {
+      "sector_id": "SEC003",
+      "sector_name": "Information Technology & Digital Services",
+      "vision_2030_priority": "critical",
+      "total_budget_SAR": 85000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 38000000000,
+        "infrastructure_and_cloud": 28000000000,
+        "r_and_d": 10000000000,
+        "training_and_upskilling": 9000000000
+      },
+      "workforce": {
+        "total_employed": 185000,
+        "saudi_nationals": 72000,
+        "expatriates": 113000,
+        "saudization_rate": 0.39,
+        "saudization_target_2030": 0.75,
+        "female_workforce_percentage": 0.22,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 24000,
+          "expatriate": 16000
+        }
+      },
+      "occupational_breakdown": {
+        "software_engineers_and_developers": {
+          "total": 55000,
+          "saudi": 18000,
+          "expatriate": 37000,
+          "demand_gap": 22000,
+          "avg_salary_SAR": 28000
+        },
+        "data_scientists_and_analysts": {
+          "total": 22000,
+          "saudi": 8000,
+          "expatriate": 14000,
+          "demand_gap": 15000,
+          "avg_salary_SAR": 30000
+        },
+        "cybersecurity_specialists": {
+          "total": 18000,
+          "saudi": 8500,
+          "expatriate": 9500,
+          "demand_gap": 12000,
+          "avg_salary_SAR": 32000
+        },
+        "ai_and_ml_engineers": {
+          "total": 12000,
+          "saudi": 3500,
+          "expatriate": 8500,
+          "demand_gap": 18000,
+          "avg_salary_SAR": 35000
+        },
+        "cloud_and_infrastructure_engineers": {
+          "total": 20000,
+          "saudi": 7000,
+          "expatriate": 13000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 26000
+        },
+        "it_project_managers": {
+          "total": 16000,
+          "saudi": 10000,
+          "expatriate": 6000,
+          "demand_gap": 4000,
+          "avg_salary_SAR": 27000
+        },
+        "ui_ux_designers": {
+          "total": 12000,
+          "saudi": 8000,
+          "expatriate": 4000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 20000
+        },
+        "network_and_systems_admins": {
+          "total": 30000,
+          "saudi": 9000,
+          "expatriate": 21000,
+          "demand_gap": 6000,
+          "avg_salary_SAR": 18000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 32000,
+        "training_programs": [
+          {
+            "program": "CS & Software Engineering Degrees",
+            "enrollees": 18000,
+            "avg_duration_years": 4,
+            "annual_graduates": 4500,
+            "saudi_percentage": 0.80
+          },
+          {
+            "program": "Cybersecurity Bootcamps & Certifications (SDAIA/NCSC)",
+            "enrollees": 5000,
+            "avg_duration_years": 0.5,
+            "annual_graduates": 10000,
+            "saudi_percentage": 0.95
+          },
+          {
+            "program": "Data Science & AI Diplomas",
+            "enrollees": 6000,
+            "avg_duration_years": 1,
+            "annual_graduates": 6000,
+            "saudi_percentage": 0.88
+          },
+          {
+            "program": "Cloud Computing Certifications",
+            "enrollees": 3000,
+            "avg_duration_years": 0.5,
+            "annual_graduates": 6000,
+            "saudi_percentage": 0.85
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 12500,
+        "fields": {
+          "computer_science": 4500,
+          "software_engineering": 2500,
+          "information_systems": 2000,
+          "cybersecurity": 1200,
+          "data_science_and_ai": 1300,
+          "computer_engineering": 1000
+        },
+        "employment_rate_within_1_year": 0.88,
+        "absorption_rate_into_sector": 0.71
+      },
+      "regional_distribution": {
+        "riyadh": 0.50,
+        "makkah_jeddah": 0.22,
+        "eastern_province": 0.20,
+        "madinah": 0.03,
+        "other_regions": 0.05
+      },
+      "skill_shortage_flags": ["ai_ml_engineers", "cybersecurity_experts", "data_scientists", "cloud_architects", "devops_engineers"],
+      "projected_demand_growth_rate": 0.15
+    },
+
+    "energy_and_utilities": {
+      "sector_id": "SEC004",
+      "sector_name": "Energy, Oil & Utilities",
+      "vision_2030_priority": "critical",
+      "total_budget_SAR": 320000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 95000000000,
+        "capital_expenditure": 175000000000,
+        "training_and_development": 20000000000,
+        "r_and_d": 30000000000
+      },
+      "workforce": {
+        "total_employed": 230000,
+        "saudi_nationals": 126500,
+        "expatriates": 103500,
+        "saudization_rate": 0.55,
+        "saudization_target_2030": 0.75,
+        "female_workforce_percentage": 0.12,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 28000,
+          "expatriate": 16000
+        }
+      },
+      "occupational_breakdown": {
+        "petroleum_engineers": {
+          "total": 38000,
+          "saudi": 22000,
+          "expatriate": 16000,
+          "demand_gap": 4000,
+          "avg_salary_SAR": 42000
+        },
+        "renewable_energy_engineers": {
+          "total": 12000,
+          "saudi": 4500,
+          "expatriate": 7500,
+          "demand_gap": 18000,
+          "avg_salary_SAR": 35000
+        },
+        "electrical_engineers": {
+          "total": 35000,
+          "saudi": 18000,
+          "expatriate": 17000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 28000
+        },
+        "mechanical_engineers": {
+          "total": 30000,
+          "saudi": 15000,
+          "expatriate": 15000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 26000
+        },
+        "field_technicians_and_operators": {
+          "total": 80000,
+          "saudi": 48000,
+          "expatriate": 32000,
+          "demand_gap": 10000,
+          "avg_salary_SAR": 16000
+        },
+        "environmental_and_sustainability_specialists": {
+          "total": 8000,
+          "saudi": 3500,
+          "expatriate": 4500,
+          "demand_gap": 6000,
+          "avg_salary_SAR": 24000
+        },
+        "project_managers_energy": {
+          "total": 15000,
+          "saudi": 11000,
+          "expatriate": 4000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 35000
+        },
+        "data_and_smart_grid_specialists": {
+          "total": 12000,
+          "saudi": 4500,
+          "expatriate": 7500,
+          "demand_gap": 9000,
+          "avg_salary_SAR": 30000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 18000,
+        "training_programs": [
+          {
+            "program": "Saudi Aramco In-House Technical Programs",
+            "enrollees": 8000,
+            "avg_duration_years": 3,
+            "annual_graduates": 2600,
+            "saudi_percentage": 1.0
+          },
+          {
+            "program": "Renewable Energy Technician Programs (KACST/KAUST)",
+            "enrollees": 3500,
+            "avg_duration_years": 2,
+            "annual_graduates": 1750,
+            "saudi_percentage": 0.90
+          },
+          {
+            "program": "Engineering Internship & Graduate Programs",
+            "enrollees": 6500,
+            "avg_duration_years": 1,
+            "annual_graduates": 6500,
+            "saudi_percentage": 0.85
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 8500,
+        "fields": {
+          "petroleum_engineering": 1800,
+          "electrical_engineering": 2200,
+          "mechanical_engineering": 2000,
+          "chemical_engineering": 1000,
+          "environmental_engineering": 600,
+          "renewable_energy_engineering": 900
+        },
+        "employment_rate_within_1_year": 0.91,
+        "absorption_rate_into_sector": 0.74
+      },
+      "regional_distribution": {
+        "eastern_province": 0.55,
+        "riyadh": 0.20,
+        "makkah_jeddah": 0.10,
+        "neom_tabuk": 0.08,
+        "other_regions": 0.07
+      },
+      "skill_shortage_flags": ["renewable_energy_engineers", "smart_grid_specialists", "environmental_engineers", "data_energy_analysts"],
+      "projected_demand_growth_rate": 0.08
+    },
+
+    "construction_and_infrastructure": {
+      "sector_id": "SEC005",
+      "sector_name": "Construction, Infrastructure & Real Estate",
+      "vision_2030_priority": "high",
+      "total_budget_SAR": 380000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 58000000000,
+        "materials_and_equipment": 240000000000,
+        "training": 8000000000,
+        "project_management": 74000000000
+      },
+      "workforce": {
+        "total_employed": 1800000,
+        "saudi_nationals": 162000,
+        "expatriates": 1638000,
+        "saudization_rate": 0.09,
+        "saudization_target_2030": 0.15,
+        "female_workforce_percentage": 0.04,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 16000,
+          "expatriate": 4200
+        }
+      },
+      "occupational_breakdown": {
+        "civil_and_structural_engineers": {
+          "total": 85000,
+          "saudi": 28000,
+          "expatriate": 57000,
+          "demand_gap": 15000,
+          "avg_salary_SAR": 22000
+        },
+        "architects_and_urban_planners": {
+          "total": 35000,
+          "saudi": 14000,
+          "expatriate": 21000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 20000
+        },
+        "construction_project_managers": {
+          "total": 42000,
+          "saudi": 20000,
+          "expatriate": 22000,
+          "demand_gap": 10000,
+          "avg_salary_SAR": 28000
+        },
+        "skilled_tradespeople": {
+          "total": 950000,
+          "saudi": 28500,
+          "expatriate": 921500,
+          "demand_gap": 200000,
+          "avg_salary_SAR": 4500
+        },
+        "unskilled_laborers": {
+          "total": 688000,
+          "saudi": 71500,
+          "expatriate": 616500,
+          "demand_gap": 120000,
+          "avg_salary_SAR": 3000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 12000,
+        "training_programs": [
+          {
+            "program": "Civil & Architectural Engineering Degrees",
+            "enrollees": 8000,
+            "avg_duration_years": 4,
+            "annual_graduates": 2000,
+            "saudi_percentage": 0.88
+          },
+          {
+            "program": "Construction Management Diplomas",
+            "enrollees": 4000,
+            "avg_duration_years": 2,
+            "annual_graduates": 2000,
+            "saudi_percentage": 0.80
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 5800,
+        "fields": {
+          "civil_engineering": 2200,
+          "architecture": 1400,
+          "urban_planning": 800,
+          "construction_management": 900,
+          "environmental_planning": 500
+        },
+        "employment_rate_within_1_year": 0.84,
+        "absorption_rate_into_sector": 0.68
+      },
+      "regional_distribution": {
+        "riyadh": 0.32,
+        "makkah_jeddah": 0.25,
+        "eastern_province": 0.15,
+        "neom_tabuk": 0.15,
+        "other_regions": 0.13
+      },
+      "skill_shortage_flags": ["bim_specialists", "smart_city_engineers", "project_managers_megaprojects", "sustainability_consultants"],
+      "projected_demand_growth_rate": 0.12
+    },
+
+    "finance_and_banking": {
+      "sector_id": "SEC006",
+      "sector_name": "Finance, Banking & Insurance",
+      "vision_2030_priority": "high",
+      "total_budget_SAR": 45000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 22000000000,
+        "technology_and_fintech": 12000000000,
+        "training_and_compliance": 6000000000,
+        "operations": 5000000000
+      },
+      "workforce": {
+        "total_employed": 135000,
+        "saudi_nationals": 97200,
+        "expatriates": 37800,
+        "saudization_rate": 0.72,
+        "saudization_target_2030": 0.90,
+        "female_workforce_percentage": 0.35,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 20000,
+          "expatriate": 14000
+        }
+      },
+      "occupational_breakdown": {
+        "financial_analysts_and_advisors": {
+          "total": 28000,
+          "saudi": 20000,
+          "expatriate": 8000,
+          "demand_gap": 4000,
+          "avg_salary_SAR": 22000
+        },
+        "risk_and_compliance_officers": {
+          "total": 18000,
+          "saudi": 14000,
+          "expatriate": 4000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 24000
+        },
+        "fintech_and_digital_banking_specialists": {
+          "total": 12000,
+          "saudi": 7000,
+          "expatriate": 5000,
+          "demand_gap": 10000,
+          "avg_salary_SAR": 28000
+        },
+        "bank_operations_staff": {
+          "total": 55000,
+          "saudi": 45000,
+          "expatriate": 10000,
+          "demand_gap": 2000,
+          "avg_salary_SAR": 14000
+        },
+        "actuaries_and_insurance_specialists": {
+          "total": 8000,
+          "saudi": 4200,
+          "expatriate": 3800,
+          "demand_gap": 2500,
+          "avg_salary_SAR": 26000
+        },
+        "investment_managers": {
+          "total": 14000,
+          "saudi": 7000,
+          "expatriate": 7000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 35000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 10000,
+        "training_programs": [
+          {
+            "program": "Finance & Economics Degrees",
+            "enrollees": 7000,
+            "avg_duration_years": 4,
+            "annual_graduates": 1750,
+            "saudi_percentage": 0.90
+          },
+          {
+            "program": "CFA/CIMA/Banking Certifications",
+            "enrollees": 3000,
+            "avg_duration_years": 1,
+            "annual_graduates": 3000,
+            "saudi_percentage": 0.88
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 7500,
+        "fields": {
+          "finance_and_economics": 3500,
+          "accounting": 2000,
+          "business_administration": 1000,
+          "actuarial_science": 300,
+          "fintech_and_digital_finance": 700
+        },
+        "employment_rate_within_1_year": 0.86,
+        "absorption_rate_into_sector": 0.65
+      },
+      "regional_distribution": {
+        "riyadh": 0.50,
+        "makkah_jeddah": 0.25,
+        "eastern_province": 0.18,
+        "other_regions": 0.07
+      },
+      "skill_shortage_flags": ["fintech_specialists", "digital_payment_engineers", "investment_analysts", "actuaries"],
+      "projected_demand_growth_rate": 0.07
+    },
+
+    "tourism_and_hospitality": {
+      "sector_id": "SEC007",
+      "sector_name": "Tourism, Hospitality & Entertainment",
+      "vision_2030_priority": "critical",
+      "total_budget_SAR": 55000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 18000000000,
+        "infrastructure_and_development": 25000000000,
+        "marketing_and_promotion": 7000000000,
+        "training": 5000000000
+      },
+      "workforce": {
+        "total_employed": 420000,
+        "saudi_nationals": 79800,
+        "expatriates": 340200,
+        "saudization_rate": 0.19,
+        "saudization_target_2030": 0.50,
+        "female_workforce_percentage": 0.20,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 10000,
+          "expatriate": 5500
+        }
+      },
+      "occupational_breakdown": {
+        "hotel_and_resort_management": {
+          "total": 55000,
+          "saudi": 14000,
+          "expatriate": 41000,
+          "demand_gap": 30000,
+          "avg_salary_SAR": 14000
+        },
+        "tour_guides_and_coordinators": {
+          "total": 28000,
+          "saudi": 12000,
+          "expatriate": 16000,
+          "demand_gap": 20000,
+          "avg_salary_SAR": 8500
+        },
+        "hospitality_and_food_service": {
+          "total": 220000,
+          "saudi": 22000,
+          "expatriate": 198000,
+          "demand_gap": 80000,
+          "avg_salary_SAR": 6000
+        },
+        "event_and_entertainment_management": {
+          "total": 32000,
+          "saudi": 18000,
+          "expatriate": 14000,
+          "demand_gap": 15000,
+          "avg_salary_SAR": 12000
+        },
+        "cultural_heritage_specialists": {
+          "total": 8000,
+          "saudi": 6000,
+          "expatriate": 2000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 13000
+        },
+        "travel_and_transport_services": {
+          "total": 77000,
+          "saudi": 7800,
+          "expatriate": 69200,
+          "demand_gap": 25000,
+          "avg_salary_SAR": 7000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 22000,
+        "training_programs": [
+          {
+            "program": "Hospitality Management Diplomas (HCI/TVET)",
+            "enrollees": 12000,
+            "avg_duration_years": 2,
+            "annual_graduates": 6000,
+            "saudi_percentage": 0.92
+          },
+          {
+            "program": "Tourism & Events Management Degrees",
+            "enrollees": 6000,
+            "avg_duration_years": 4,
+            "annual_graduates": 1500,
+            "saudi_percentage": 0.88
+          },
+          {
+            "program": "Culinary Arts Programs",
+            "enrollees": 4000,
+            "avg_duration_years": 1,
+            "annual_graduates": 4000,
+            "saudi_percentage": 0.85
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 4500,
+        "fields": {
+          "hospitality_management": 1500,
+          "tourism_management": 1200,
+          "events_management": 800,
+          "heritage_and_culture": 500,
+          "travel_and_transport": 500
+        },
+        "employment_rate_within_1_year": 0.72,
+        "absorption_rate_into_sector": 0.65
+      },
+      "regional_distribution": {
+        "makkah_jeddah": 0.30,
+        "riyadh": 0.25,
+        "madinah": 0.12,
+        "alula_tabuk": 0.12,
+        "eastern_province": 0.10,
+        "other_regions": 0.11
+      },
+      "skill_shortage_flags": ["hotel_managers", "multilingual_tour_guides", "hospitality_trained_saudis", "cultural_tourism_experts"],
+      "projected_demand_growth_rate": 0.18
+    },
+
+    "manufacturing_and_industry": {
+      "sector_id": "SEC008",
+      "sector_name": "Manufacturing, Industry & Mining",
+      "vision_2030_priority": "high",
+      "total_budget_SAR": 150000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 32000000000,
+        "capital_and_equipment": 95000000000,
+        "training": 8000000000,
+        "r_and_d": 15000000000
+      },
+      "workforce": {
+        "total_employed": 680000,
+        "saudi_nationals": 142800,
+        "expatriates": 537200,
+        "saudization_rate": 0.21,
+        "saudization_target_2030": 0.35,
+        "female_workforce_percentage": 0.08,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 13500,
+          "expatriate": 5000
+        }
+      },
+      "occupational_breakdown": {
+        "industrial_and_manufacturing_engineers": {
+          "total": 45000,
+          "saudi": 18000,
+          "expatriate": 27000,
+          "demand_gap": 12000,
+          "avg_salary_SAR": 22000
+        },
+        "chemical_engineers": {
+          "total": 20000,
+          "saudi": 9000,
+          "expatriate": 11000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 24000
+        },
+        "skilled_factory_operators": {
+          "total": 380000,
+          "saudi": 57000,
+          "expatriate": 323000,
+          "demand_gap": 60000,
+          "avg_salary_SAR": 6000
+        },
+        "quality_control_specialists": {
+          "total": 28000,
+          "saudi": 14000,
+          "expatriate": 14000,
+          "demand_gap": 4000,
+          "avg_salary_SAR": 14000
+        },
+        "mining_engineers_and_geologists": {
+          "total": 18000,
+          "saudi": 8000,
+          "expatriate": 10000,
+          "demand_gap": 6000,
+          "avg_salary_SAR": 26000
+        },
+        "supply_chain_and_logistics": {
+          "total": 55000,
+          "saudi": 22000,
+          "expatriate": 33000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 16000
+        },
+        "automation_and_robotics_technicians": {
+          "total": 9000,
+          "saudi": 2800,
+          "expatriate": 6200,
+          "demand_gap": 12000,
+          "avg_salary_SAR": 20000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 20000,
+        "training_programs": [
+          {
+            "program": "Industrial Engineering & Technology Degrees",
+            "enrollees": 8000,
+            "avg_duration_years": 4,
+            "annual_graduates": 2000,
+            "saudi_percentage": 0.82
+          },
+          {
+            "program": "TVET Industrial Technician Programs",
+            "enrollees": 12000,
+            "avg_duration_years": 2,
+            "annual_graduates": 6000,
+            "saudi_percentage": 0.88
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 6500,
+        "fields": {
+          "industrial_engineering": 2000,
+          "chemical_engineering": 1500,
+          "materials_engineering": 800,
+          "mining_engineering": 700,
+          "supply_chain_management": 1000,
+          "automation_and_mechatronics": 500
+        },
+        "employment_rate_within_1_year": 0.80,
+        "absorption_rate_into_sector": 0.66
+      },
+      "regional_distribution": {
+        "eastern_province": 0.35,
+        "riyadh": 0.25,
+        "makkah_jeddah": 0.18,
+        "jubail_yanbu": 0.15,
+        "other_regions": 0.07
+      },
+      "skill_shortage_flags": ["automation_engineers", "robotics_technicians", "quality_engineers", "mining_specialists"],
+      "projected_demand_growth_rate": 0.10
+    },
+
+    "government_and_public_administration": {
+      "sector_id": "SEC009",
+      "sector_name": "Government & Public Administration",
+      "vision_2030_priority": "high",
+      "total_budget_SAR": 280000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 190000000000,
+        "digital_transformation": 40000000000,
+        "training_and_capacity_building": 25000000000,
+        "operations": 25000000000
+      },
+      "workforce": {
+        "total_employed": 1100000,
+        "saudi_nationals": 1067000,
+        "expatriates": 33000,
+        "saudization_rate": 0.97,
+        "saudization_target_2030": 0.99,
+        "female_workforce_percentage": 0.38,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 16000,
+          "expatriate": 12000
+        }
+      },
+      "occupational_breakdown": {
+        "policy_analysts_and_advisors": {
+          "total": 55000,
+          "saudi": 53000,
+          "expatriate": 2000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 20000
+        },
+        "administrative_officers": {
+          "total": 450000,
+          "saudi": 440000,
+          "expatriate": 10000,
+          "demand_gap": 10000,
+          "avg_salary_SAR": 12000
+        },
+        "data_and_analytics_officers": {
+          "total": 18000,
+          "saudi": 17000,
+          "expatriate": 1000,
+          "demand_gap": 12000,
+          "avg_salary_SAR": 22000
+        },
+        "digital_government_specialists": {
+          "total": 25000,
+          "saudi": 24000,
+          "expatriate": 1000,
+          "demand_gap": 15000,
+          "avg_salary_SAR": 24000
+        },
+        "legal_and_regulatory_officers": {
+          "total": 65000,
+          "saudi": 63000,
+          "expatriate": 2000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 18000
+        },
+        "project_and_program_managers": {
+          "total": 42000,
+          "saudi": 41000,
+          "expatriate": 1000,
+          "demand_gap": 8000,
+          "avg_salary_SAR": 20000
+        },
+        "social_services_workers": {
+          "total": 75000,
+          "saudi": 73000,
+          "expatriate": 2000,
+          "demand_gap": 10000,
+          "avg_salary_SAR": 11000
+        },
+        "security_and_defense_personnel": {
+          "total": 370000,
+          "saudi": 356000,
+          "expatriate": 14000,
+          "demand_gap": 20000,
+          "avg_salary_SAR": 15000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 35000,
+        "training_programs": [
+          {
+            "program": "Public Administration & Policy Degrees",
+            "enrollees": 12000,
+            "avg_duration_years": 4,
+            "annual_graduates": 3000,
+            "saudi_percentage": 0.98
+          },
+          {
+            "program": "Leadership & Governance Programs (NAUSS/KFUPM)",
+            "enrollees": 8000,
+            "avg_duration_years": 1,
+            "annual_graduates": 8000,
+            "saudi_percentage": 0.99
+          },
+          {
+            "program": "Digital Government Transformation Programs",
+            "enrollees": 15000,
+            "avg_duration_years": 0.5,
+            "annual_graduates": 30000,
+            "saudi_percentage": 0.99
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 18000,
+        "fields": {
+          "public_administration": 5000,
+          "political_science_and_policy": 3000,
+          "law": 4000,
+          "sociology_and_social_work": 3000,
+          "statistics_and_data": 2000,
+          "public_health_administration": 1000
+        },
+        "employment_rate_within_1_year": 0.88,
+        "absorption_rate_into_sector": 0.80
+      },
+      "regional_distribution": {
+        "riyadh": 0.40,
+        "makkah_jeddah": 0.20,
+        "eastern_province": 0.15,
+        "madinah": 0.08,
+        "other_regions": 0.17
+      },
+      "skill_shortage_flags": ["data_analytics_officers", "digital_transformation_specialists", "policy_evaluators", "program_managers"],
+      "projected_demand_growth_rate": 0.04
+    },
+
+    "agriculture_and_water": {
+      "sector_id": "SEC010",
+      "sector_name": "Agriculture, Water & Food Security",
+      "vision_2030_priority": "medium",
+      "total_budget_SAR": 28000000000,
+      "budget_breakdown": {
+        "salaries_and_benefits": 8000000000,
+        "infrastructure_and_tech": 12000000000,
+        "training": 3000000000,
+        "r_and_d": 5000000000
+      },
+      "workforce": {
+        "total_employed": 280000,
+        "saudi_nationals": 42000,
+        "expatriates": 238000,
+        "saudization_rate": 0.15,
+        "saudization_target_2030": 0.25,
+        "female_workforce_percentage": 0.10,
+        "average_salary_SAR_monthly": {
+          "saudi_national": 10000,
+          "expatriate": 3500
+        }
+      },
+      "occupational_breakdown": {
+        "agricultural_engineers_and_scientists": {
+          "total": 12000,
+          "saudi": 5000,
+          "expatriate": 7000,
+          "demand_gap": 3000,
+          "avg_salary_SAR": 16000
+        },
+        "water_engineers_and_hydrologists": {
+          "total": 8000,
+          "saudi": 4000,
+          "expatriate": 4000,
+          "demand_gap": 4000,
+          "avg_salary_SAR": 20000
+        },
+        "farm_workers_and_operators": {
+          "total": 210000,
+          "saudi": 21000,
+          "expatriate": 189000,
+          "demand_gap": 20000,
+          "avg_salary_SAR": 3200
+        },
+        "food_technology_specialists": {
+          "total": 18000,
+          "saudi": 7000,
+          "expatriate": 11000,
+          "demand_gap": 5000,
+          "avg_salary_SAR": 14000
+        },
+        "environmental_and_sustainability_specialists_agri": {
+          "total": 6000,
+          "saudi": 3000,
+          "expatriate": 3000,
+          "demand_gap": 2500,
+          "avg_salary_SAR": 18000
+        }
+      },
+      "training_pipeline": {
+        "currently_in_training": 8000,
+        "training_programs": [
+          {
+            "program": "Agricultural Science & Engineering Degrees",
+            "enrollees": 5000,
+            "avg_duration_years": 4,
+            "annual_graduates": 1250,
+            "saudi_percentage": 0.85
+          },
+          {
+            "program": "Hydrology and Water Management Programs",
+            "enrollees": 3000,
+            "avg_duration_years": 2,
+            "annual_graduates": 1500,
+            "saudi_percentage": 0.82
+          }
+        ]
+      },
+      "university_graduates": {
+        "annual_graduates_relevant_fields": 3500,
+        "fields": {
+          "agricultural_engineering": 1000,
+          "agricultural_science": 800,
+          "water_resource_management": 600,
+          "food_science_and_technology": 700,
+          "environmental_science": 400
+        },
+        "employment_rate_within_1_year": 0.70,
+        "absorption_rate_into_sector": 0.60
+      },
+      "regional_distribution": {
+        "asir_jizan": 0.30,
+        "eastern_province": 0.20,
+        "riyadh": 0.18,
+        "qassim_hail": 0.22,
+        "other_regions": 0.10
+      },
+      "skill_shortage_flags": ["precision_agriculture_specialists", "water_engineers", "food_safety_experts", "agri_tech_specialists"],
+      "projected_demand_growth_rate": 0.05
+    }
+
+  },
+
+  "cross_sector_indicators": {
+    "top_in_demand_skills_nationwide": [
+      "artificial_intelligence_and_ml",
+      "data_analytics",
+      "cybersecurity",
+      "project_management",
+      "digital_transformation",
+      "renewable_energy",
+      "healthcare_specialization",
+      "tourism_and_hospitality_management",
+      "financial_technology"
+    ],
+    "highest_wage_growth_sectors": ["information_technology", "energy_and_utilities", "finance_and_banking"],
+    "highest_saudization_gap_sectors": ["construction_and_infrastructure", "agriculture_and_water", "tourism_and_hospitality"],
+    "fastest_growing_sectors_by_demand": ["tourism_and_hospitality", "information_technology", "construction_and_infrastructure"],
+
+    "national_training_institutions": [
+      {"name": "Technical and Vocational Training Corporation (TVET)", "annual_graduates": 120000, "focus": "vocational_and_technical"},
+      {"name": "King Abdullah University of Science and Technology (KAUST)", "annual_graduates": 1200, "focus": "research_and_technology"},
+      {"name": "Saudi Electronic University (SEU)", "annual_graduates": 18000, "focus": "digital_and_online_education"},
+      {"name": "King Fahd University of Petroleum and Minerals (KFUPM)", "annual_graduates": 4500, "focus": "engineering_and_energy"},
+      {"name": "Princess Nourah bint Abdulrahman University (PNU)", "annual_graduates": 22000, "focus": "female_workforce_development"},
+      {"name": "King Abdulaziz University (KAU)", "annual_graduates": 30000, "focus": "multi_disciplinary"},
+      {"name": "Saudi Commission for Health Specialties (SCHS) Programs", "annual_graduates": 8800, "focus": "healthcare"}
+    ],
+
+    "labor_market_annual_absorption_capacity": {
+      "total_new_positions_created_annually": 380000,
+      "positions_filled_by_saudi_graduates": 165000,
+      "positions_filled_by_expatriates": 215000
+    },
+
+    "wage_index_by_experience": {
+      "entry_level_0_2_years": 1.0,
+      "mid_level_3_7_years": 1.45,
+      "senior_level_8_15_years": 2.10,
+      "expert_level_15_plus_years": 3.20
+    },
+
+    "female_workforce_readiness": {
+      "female_university_graduates_annually": 120000,
+      "female_labor_participation_rate": 0.33,
+      "sectors_with_highest_female_participation": ["education", "healthcare", "government_and_public_administration", "finance_and_banking"],
+      "sectors_with_lowest_female_participation": ["construction_and_infrastructure", "agriculture_and_water", "energy_and_utilities"]
+    },
+
+    "youth_employment": {
+      "population_aged_15_to_29": 9500000,
+      "youth_unemployment_rate": 0.168,
+      "youth_in_higher_education": 1200000,
+      "youth_in_vocational_training": 380000
+    }
+  },
+
+  "regional_workforce_data": {
+    "riyadh_region": {
+      "total_workforce": 4800000,
+      "saudi_nationals": 2160000,
+      "unemployment_rate": 0.068,
+      "dominant_sectors": ["government", "it", "finance", "construction"],
+      "avg_monthly_salary_SAR": 14500
+    },
+    "makkah_region": {
+      "total_workforce": 3200000,
+      "saudi_nationals": 1280000,
+      "unemployment_rate": 0.078,
+      "dominant_sectors": ["tourism", "construction", "healthcare", "retail"],
+      "avg_monthly_salary_SAR": 12000
+    },
+    "eastern_province": {
+      "total_workforce": 2800000,
+      "saudi_nationals": 1260000,
+      "unemployment_rate": 0.060,
+      "dominant_sectors": ["energy", "manufacturing", "construction", "finance"],
+      "avg_monthly_salary_SAR": 16000
+    },
+    "madinah_region": {
+      "total_workforce": 950000,
+      "saudi_nationals": 427500,
+      "unemployment_rate": 0.085,
+      "dominant_sectors": ["tourism", "government", "education", "healthcare"],
+      "avg_monthly_salary_SAR": 10500
+    },
+    "asir_region": {
+      "total_workforce": 680000,
+      "saudi_nationals": 272000,
+      "unemployment_rate": 0.092,
+      "dominant_sectors": ["agriculture", "government", "education", "tourism"],
+      "avg_monthly_salary_SAR": 9000
+    },
+    "other_regions_combined": {
+      "total_workforce": 2770000,
+      "saudi_nationals": 1108000,
+      "unemployment_rate": 0.095,
+      "dominant_sectors": ["government", "agriculture", "construction"],
+      "avg_monthly_salary_SAR": 9500
+    }
+  },
+
+  "projection_assumptions": {
+    "base_year": 2024,
+    "projection_horizon_years": 6,
+    "annual_gdp_growth_rate": 0.045,
+    "annual_population_growth_rate": 0.018,
+    "vision_2030_workforce_localization_annual_target": 0.03,
+    "estimated_annual_expatriate_replacement_by_saudis": 45000,
+    "university_enrollment_growth_rate": 0.04,
+    "tvet_enrollment_growth_rate": 0.07,
+    "notes": "All figures are simulated for AgentNation prototype testing. Values are calibrated to reflect realistic proportions based on publicly available Saudi government statistics and Vision 2030 targets."
+  }
+}

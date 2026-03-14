@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: 216 45% 5%;
+    --bg-surface: 218 40% 8%;
+    --bg-elevated: 220 26% 11%;
+    --border-subtle: 217 24% 17%;
+    --border-active: 215 19% 27%;
+
+    --agent-idle: 217 24% 17%;
+    --agent-running: 224 76% 48%;
+    --agent-complete: 160 76% 20%;
+    --agent-skipped: 218 14% 24%;
+    --agent-error: 0 60% 30%;
+
+    --text-primary: 210 40% 96%;
+    --text-secondary: 215 16% 62%;
+    --text-muted: 215 14% 36%;
+
+    --accent-blue: 217 91% 60%;
+    --accent-green: 160 84% 39%;
+    --accent-amber: 38 92% 50%;
+    --accent-red: 0 84% 60%;
+    --accent-critical: 0 74% 50%;
+
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+    --card: var(--bg-surface);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-surface);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--accent-blue);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--bg-elevated);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--bg-elevated);
+    --muted-foreground: var(--text-secondary);
+    --accent: var(--bg-elevated);
+    --accent-foreground: var(--text-primary);
+    --destructive: var(--accent-red);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--border-subtle);
+    --input: var(--border-subtle);
+    --ring: var(--accent-blue);
+    --radius: 0.25rem;
+
+    --glow-blue: 0 0 20px rgba(59,130,246,0.4);
+    --glow-green: 0 0 20px rgba(16,185,129,0.3);
+    --glow-amber: 0 0 20px rgba(245,158,11,0.3);
+    --glow-red: 0 0 20px rgba(239,68,68,0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+/* Grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(hsl(var(--border-subtle) / 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border-subtle) / 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Scan line animation */
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.scanline {
+  animation: scanline 2s linear infinite;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent-blue) / 0.3), transparent);
+  height: 1px;
+}
+
+/* Traveling dot on connector */
+@keyframes travel-dot {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Pulse glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(59,130,246,0.2); }
+  50% { box-shadow: 0 0 24px rgba(59,130,246,0.5); }
+}
+.pulse-glow-blue {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: hsl(var(--accent-blue) / 0.4); }
+  50% { border-color: hsl(var(--accent-blue) / 0.9); }
+}
+.pulse-border-blue {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+/* Terminal input style */
+.terminal-input {
+  @apply bg-background border border-border text-foreground font-mono text-sm px-3 py-2;
+  @apply focus:outline-none focus:border-primary transition-colors;
+}
+
+.terminal-input::placeholder {
+  color: hsl(var(--text-muted));
+}
+
+/* Typewriter */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor-blink::after {
+  content: '█';
+  animation: blink-cursor 1s step-end infinite;
+  color: hsl(var(--accent-blue));
+  margin-left: 2px;
+}
+
+/* Gauge bar fill animation */
+@keyframes gauge-fill {
+  from { width: 0%; }
+}
+.gauge-animate {
+  animation: gauge-fill 1s ease-out forwards;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: hsl(var(--bg-primary)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--border-subtle)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--border-active)); }
