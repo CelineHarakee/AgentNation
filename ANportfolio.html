@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentNation — AI Policy Intelligence Platform</title>
+  <meta name="description" content="AgentNation is a multi-agent AI decision support system for government workforce policy evaluation, scenario comparison, and portfolio risk monitoring." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ───────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ── Design Tokens ─────────────────────────────────────────────────── */
+    :root {
+      --bg:           #060B13;
+      --bg-surface:   #0C1420;
+      --bg-card:      #0F1A28;
+      --bg-elevated:  #132030;
+      --border:       #1A2A3E;
+      --border-glow:  #1E3A5F;
+
+      --blue:         #3B82F6;
+      --blue-dim:     #1D4ED8;
+      --cyan:         #06B6D4;
+      --green:        #10B981;
+      --amber:        #F59E0B;
+      --red:          #EF4444;
+      --purple:       #8B5CF6;
+
+      --text:         #F1F5F9;
+      --text-mid:     #94A3B8;
+      --text-muted:   #475569;
+
+      --glow-blue:    0 0 30px rgba(59,130,246,0.25);
+      --glow-cyan:    0 0 30px rgba(6,182,212,0.2);
+      --glow-green:   0 0 30px rgba(16,185,129,0.2);
+
+      --mono: 'IBM Plex Mono', monospace;
+      --display: 'Syne', sans-serif;
+      --body: 'DM Sans', sans-serif;
+
+      --radius: 4px;
+      --radius-lg: 8px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Grid background ───────────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Scroll reveal ─────────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── Layout helpers ────────────────────────────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .section { padding: 96px 0; }
+    .section-sm { padding: 64px 0; }
+
+    /* ── Typography ────────────────────────────────────────────────────── */
+    .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.15; }
+    h1 { font-size: clamp(48px, 7vw, 80px); }
+    h2 { font-size: clamp(32px, 4vw, 48px); }
+    h3 { font-size: 20px; }
+    p { color: var(--text-mid); }
+
+    /* ── Mono label ────────────────────────────────────────────────────── */
+    .mono { font-family: var(--mono); }
+    .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .tag-blue  { border-color: rgba(59,130,246,0.4); color: var(--blue); background: rgba(59,130,246,0.08); }
+    .tag-green { border-color: rgba(16,185,129,0.4); color: var(--green); background: rgba(16,185,129,0.08); }
+    .tag-amber { border-color: rgba(245,158,11,0.4); color: var(--amber); background: rgba(245,158,11,0.08); }
+    .tag-red   { border-color: rgba(239,68,68,0.4);  color: var(--red);   background: rgba(239,68,68,0.08); }
+    .tag-purple{ border-color: rgba(139,92,246,0.4); color: var(--purple);background: rgba(139,92,246,0.08); }
+
+    /* ── Cards ─────────────────────────────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: var(--border-glow);
+      box-shadow: var(--glow-blue);
+    }
+    .card-accent-blue  { border-left: 3px solid var(--blue); }
+    .card-accent-green { border-left: 3px solid var(--green); }
+    .card-accent-amber { border-left: 3px solid var(--amber); }
+    .card-accent-purple{ border-left: 3px solid var(--purple); }
+    .card-accent-cyan  { border-left: 3px solid var(--cyan); }
+    .card-accent-red   { border-left: 3px solid var(--red); }
+
+    /* ── Divider ────────────────────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 64px 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* NAV                                                                 */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(6,11,19,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .nav-logo span {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* HERO                                                               */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse at center,
+        rgba(59,130,246,0.08) 0%,
+        rgba(6,182,212,0.04) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 64px;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--blue);
+    }
+    .hero-title {
+      font-size: clamp(52px, 7vw, 86px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-mid);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: #2563EB;
+      box-shadow: 0 0 24px rgba(59,130,246,0.4);
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 13px 24px;
+      border: 1px solid var(--border-glow);
+      color: var(--text-mid);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Hero logo */
+    .hero-logo-wrap {
+      position: relative;
+    }
+    .hero-logo-wrap img {
+      width: 260px;
+      height: 260px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 40px rgba(59,130,246,0.35));
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* STATS BAR                                                          */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .stats-bar {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      padding: 0 32px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: var(--mono);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--blue);
+      display: block;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* PROBLEM                                                            */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .problem-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .problem-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+    .problem-item h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .problem-item p {
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* USE CASES                                                          */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .lifecycle-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 48px 0;
+      overflow-x: auto;
+    }
+    .lifecycle-node {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      position: relative;
+    }
+    .lifecycle-node::after {
+      content: '→';
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--mono);
+      color: var(--border-glow);
+      font-size: 20px;
+      z-index: 2;
+    }
+    .lifecycle-node:last-child::after { display: none; }
+    .lifecycle-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+    .lifecycle-phase {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .lifecycle-title {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .lifecycle-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .uc-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+    .uc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .uc-card:hover { border-color: var(--border-glow); box-shadow: var(--glow-blue); }
+    .uc-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .uc-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    .uc-body { padding: 24px; }
+    .uc-body h3 { font-size: 17px; margin-bottom: 10px; }
+    .uc-body p { font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+    .uc-agents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .agent-pill {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* PIPELINE                                                           */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .pipeline-wrap {
+      margin-top: 48px;
+      position: relative;
+    }
+    .pipeline-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .pipeline-agent {
+      flex: 1;
+      min-width: 140px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 20px 16px;
+      position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .pipeline-agent:first-child { border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+    .pipeline-agent:last-child  { border-radius: 0 var(--radius-lg) var(--radius-lg) 0; }
+    .pipeline-agent:not(:last-child) { border-right: none; }
+    .pipeline-agent:hover { border-color: var(--border-glow); z-index: 1; box-shadow: var(--glow-blue); }
+    .agent-code {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .agent-name {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .agent-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+    .arrow-connector {
+      display: flex;
+      align-items: center;
+      color: var(--border-glow);
+      font-size: 16px;
+      padding: 0 4px;
+      min-width: 24px;
+      font-family: var(--mono);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* INTELLIGENCE LAYER                                                 */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .intel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .intel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .intel-card:hover { border-color: var(--border-glow); box-shadow: var(--glow-blue); }
+    .intel-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .intel-card h3 { font-size: 18px; margin-bottom: 10px; }
+    .intel-card p { font-size: 14px; line-height: 1.75; }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* TECH STACK                                                         */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .tech-layer {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .tech-layer-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .tech-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tech-item {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-mid);
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .tech-item span { color: var(--text-muted); font-size: 11px; display: block; margin-top: 2px; }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* DESIGN PRINCIPLES                                                  */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .principle-card {
+      padding: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .principle-number {
+      font-family: var(--mono);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--border-glow);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .principle-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .principle-card p { font-size: 13px; line-height: 1.7; }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* TEAM                                                               */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      text-align: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .team-card:hover { border-color: var(--border-glow); box-shadow: var(--glow-blue); }
+    .team-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-dim), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+      margin: 0 auto 20px;
+      border: 2px solid rgba(59,130,246,0.3);
+    }
+    .team-name {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .team-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+    .team-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+    .team-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .team-link:hover { color: var(--blue); }
+    .team-link-icon { font-size: 14px; }
+
+    .supervisor-box {
+      max-width: 480px;
+      margin: 40px auto 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      text-align: center;
+    }
+    .supervisor-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .supervisor-name {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .supervisor-dept {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* FOOTER                                                             */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-left img { width: 28px; height: 28px; object-fit: contain; }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .footer-right {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════ */
+    /* SECTION HEADINGS                                                   */
+    /* ═══════════════════════════════════════════════════════════════════ */
+    .section-heading {
+      margin-bottom: 16px;
+    }
+    .section-heading h2 {
+      background: linear-gradient(135deg, var(--text) 60%, var(--text-mid));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-top: 12px;
+    }
+
+    /* ── Scan line animation for hero ─────────────────────────────────── */
+    .scan-line {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      animation: scan 3s linear infinite;
+      opacity: 0.5;
+    }
+    @keyframes scan {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Pulse dot */
+    .pulse-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-right: 6px;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    /* ── Responsive ─────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-logo-wrap { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .uc-cards { grid-template-columns: 1fr; }
+      .pipeline-flow { flex-direction: column; }
+      .pipeline-agent:first-child { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+      .pipeline-agent:last-child  { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+      .pipeline-agent:not(:last-child) { border-right: 1px solid var(--border); border-bottom: none; }
+      .arrow-connector { display: none; }
+      .intel-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; max-width: 380px; }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .lifecycle-flow { flex-direction: column; gap: 16px; }
+      .lifecycle-node::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- NAV                                                                -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">
+      <img src="logo.png" alt="AgentNation logo" />
+      <span>AgentNation</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#solution">Solution</a></li>
+      <li><a href="#use-cases">Use Cases</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#tech">Technology</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- HERO                                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow reveal">
+          <span class="pulse-dot"></span>
+          Senior Project 
+        </div>
+        <h1 class="hero-title reveal reveal-delay-1">
+          Agent<span class="accent">Nation</span>
+        </h1>
+        <p class="hero-subtitle reveal reveal-delay-2">
+          A multi-agent AI decision intelligence platform that helps governments
+          evaluate workforce policies, compare scenarios, and detect
+          portfolio-level risks — before implementation.
+        </p>
+        <div class="hero-badges reveal reveal-delay-3">
+          <span class="tag tag-blue">Multi-Agent AI</span>
+          <span class="tag tag-green">RAG-Enhanced</span>
+          <span class="tag tag-purple">Knowledge Graph</span>
+          <span class="tag tag-amber">Vision 2030</span>
+          <span class="tag">FastAPI + React</span>
+        </div>
+        <div class="hero-cta reveal reveal-delay-4">
+          <a href="#solution" class="btn-primary">Explore the Platform →</a>
+          <a href="#team" class="btn-outline">Meet the Team</a>
+        </div>
+      </div>
+      <div class="hero-logo-wrap reveal reveal-delay-2">
+        <img src="logo.png" alt="AgentNation" />
+      </div>
+    </div>
+  </div>
+  <div class="scan-line"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- STATS BAR                                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Use Cases</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <span class="stat-number">8</span>
+        <span class="stat-label">AI Agents</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <span class="stat-number">44</span>
+        <span class="stat-label">RAG Documents</span>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <span class="stat-number">7</span>
+        <span class="stat-label">Sectors Covered</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- PROBLEM                                                            -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="problem">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">The Problem</div>
+      <h2>Governments approve policies<br/>without knowing their cost</h2>
+      <p class="section-subtitle">
+        Policy decision-making in Saudi Arabia — and across the GCC — lacks
+        structured, data-driven tools for workforce impact analysis. The result
+        is costly mismatches discovered only after implementation.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <div class="problem-item reveal reveal-delay-1">
+        <div class="problem-icon">⚡</div>
+        <div>
+          <h3>No Simulation Before Approval</h3>
+          <p>Policies are evaluated based on static reports, not dynamic simulations
+             of workforce demand, training capacity, or budget stress.</p>
+        </div>
+      </div>
+      <div class="problem-item reveal reveal-delay-2">
+        <div class="problem-icon">📊</div>
+        <div>
+          <h3>Workforce Mismatches</h3>
+          <p>Saudization targets, training pipeline gaps, and sector-specific labor
+             shortages are discovered after projects have begun — not before.</p>
+        </div>
+      </div>
+      <div class="problem-item reveal reveal-delay-3">
+        <div class="problem-icon">🔍</div>
+        <div>
+          <h3>No Alternative Exploration</h3>
+          <p>Decision-makers receive one option — approve or reject. No tool
+             exists to rapidly compare implementation strategies or policy variants.</p>
+        </div>
+      </div>
+      <div class="problem-item reveal reveal-delay-4">
+        <div class="problem-icon">⚠️</div>
+        <div>
+          <h3>Portfolio Blind Spots</h3>
+          <p>Multiple active policies are analyzed in isolation. Cross-policy conflicts —
+             two initiatives competing for the same nurses, engineers, or training
+             institutions — remain invisible until it's too late.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SOLUTION                                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section-sm" id="solution">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">The Solution</div>
+      <h2>AI that reasons about policy,<br/>not just reports on it</h2>
+      <p class="section-subtitle">
+        AgentNation is a multi-agent decision support system where specialized AI agents
+        collaborate in sequence — each responsible for a distinct stage of policy evaluation.
+        The system surfaces risks, quantifies them, and generates recommendations.
+        Every output is non-binding. Humans remain in control.
+      </p>
+    </div>
+
+    <!-- Lifecycle flow -->
+    <div class="lifecycle-flow reveal reveal-delay-1">
+      <div class="lifecycle-node">
+        <div class="lifecycle-phase">Phase 1</div>
+        <div class="lifecycle-badge tag-blue">Design</div>
+        <div class="lifecycle-title">Scenario<br/>Comparison</div>
+        <div class="lifecycle-desc">Which version<br/>of this policy works best?</div>
+      </div>
+      <div class="lifecycle-node">
+        <div class="lifecycle-phase">Phase 2</div>
+        <div class="lifecycle-badge tag-amber">Evaluation</div>
+        <div class="lifecycle-title">Impact<br/>Assessment</div>
+        <div class="lifecycle-desc">Is this policy<br/>feasible to implement?</div>
+      </div>
+      <div class="lifecycle-node">
+        <div class="lifecycle-phase">Phase 3</div>
+        <div class="lifecycle-badge tag-red">Monitoring</div>
+        <div class="lifecycle-title">Portfolio<br/>Risk Monitor</div>
+        <div class="lifecycle-desc">Are active policies<br/>creating a future crisis?</div>
+      </div>
+    </div>
+
+    <div class="card reveal reveal-delay-2" style="margin-top:32px; border-left: 3px solid var(--blue);">
+      <p style="font-size:15px; color: var(--text-mid); line-height: 1.85;">
+        <strong style="color:var(--text);">Core design principle:</strong>
+        AgentNation does not make autonomous decisions. Every analysis is labeled non-binding.
+        The system is designed so that AI surfaces the risk and the human decides the action —
+        directly addressing the governance concerns raised in Saudi Arabia's National AI Ethics Principles.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- USE CASES                                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="use-cases">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">Use Cases</div>
+      <h2>Three levels of intelligence</h2>
+      <p class="section-subtitle">
+        Micro → Meso → Macro. Each use case answers a different question at a different scale.
+      </p>
+    </div>
+
+    <div class="uc-cards">
+      <!-- UC1 -->
+      <div class="uc-card reveal reveal-delay-1">
+        <div class="uc-header">
+          <span class="uc-num mono">UC — 01</span>
+          <span class="tag tag-amber">Micro</span>
+        </div>
+        <div class="uc-body">
+          <h3>Policy Workforce Impact Assessment</h3>
+          <p>A policymaker submits a proposed workforce policy. The system evaluates
+             feasibility through a 5-agent pipeline and routes to one of three
+             decision paths: No Risk, Monitor, or Mitigation Required.</p>
+          <div class="uc-agents">
+            <span class="agent-pill">PAA</span>
+            <span class="agent-pill">WIA</span>
+            <span class="agent-pill">MAA</span>
+            <span class="agent-pill">COA</span>
+            <span class="agent-pill">ORA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC2 -->
+      <div class="uc-card reveal reveal-delay-2">
+        <div class="uc-header">
+          <span class="uc-num mono">UC — 02</span>
+          <span class="tag tag-blue">Meso</span>
+        </div>
+        <div class="uc-body">
+          <h3>Policy Scenario Comparison</h3>
+          <p>Instead of one policy, the user submits a policy intent and growth target.
+             The SGA automatically generates three strategic scenarios. The CAA ranks
+             them. A hybrid synthesis is available on demand.</p>
+          <div class="uc-agents">
+            <span class="agent-pill">SGA</span>
+            <span class="agent-pill">PAA</span>
+            <span class="agent-pill">WIA</span>
+            <span class="agent-pill">MAA</span>
+            <span class="agent-pill">CAA</span>
+            <span class="agent-pill">ORA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UC3 -->
+      <div class="uc-card reveal reveal-delay-3">
+        <div class="uc-header">
+          <span class="uc-num mono">UC — 03</span>
+          <span class="tag tag-red">Macro</span>
+        </div>
+        <div class="uc-body">
+          <h3>Workforce Portfolio Risk Monitor</h3>
+          <p>A portfolio of 3–10 active policies is analyzed simultaneously.
+             The PRA uses the Knowledge Graph to detect cross-policy conflicts —
+             workforce overlap, capacity overload, and training bottlenecks.</p>
+          <div class="uc-agents">
+            <span class="agent-pill">WIA × N</span>
+            <span class="agent-pill">MAA × N</span>
+            <span class="agent-pill">PRA</span>
+            <span class="agent-pill">ORA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- PIPELINE                                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="pipeline">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">Agent Architecture</div>
+      <h2>Every agent has one job</h2>
+      <p class="section-subtitle">
+        Sequential, transparent, and auditable. Each agent passes structured output to the next.
+        No black boxes. Every decision is explainable.
+      </p>
+    </div>
+
+    <div class="pipeline-wrap reveal reveal-delay-1">
+      <div class="pipeline-flow">
+        <div class="pipeline-agent card-accent-blue">
+          <div class="agent-code">PAA</div>
+          <div class="agent-name">Policy Analysis Agent</div>
+          <div class="agent-desc">Reads policy text via Gemini LLM + RAG context. Extracts objectives, affected domains, assumptions, and complexity level.</div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="pipeline-agent card-accent-green">
+          <div class="agent-code">WIA</div>
+          <div class="agent-name">Workforce Intelligence Agent</div>
+          <div class="agent-desc">Reads sector database. Computes workforce pressure, budget stress ratio, training capacity gap, and Saudization risk.</div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="pipeline-agent card-accent-amber">
+          <div class="agent-code">MAA</div>
+          <div class="agent-name">Monitoring & Assessment Agent</div>
+          <div class="agent-desc">Applies weighted scoring formula to WIA metrics. Outputs severity score 0–100 and risk classification.</div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="pipeline-agent card-accent-purple">
+          <div class="agent-code">COA</div>
+          <div class="agent-name">Coordination & Oversight Agent</div>
+          <div class="agent-desc">Routes by numeric threshold to Path A (no risk), B (monitor), or C (mitigation). Triggers ORA if needed.</div>
+        </div>
+        <div class="arrow-connector">→</div>
+        <div class="pipeline-agent card-accent-red">
+          <div class="agent-code">ORA</div>
+          <div class="agent-name">Option Recommendation Agent</div>
+          <div class="agent-desc">Generates targeted policy alternatives or hybrid scenarios. Each recommendation addresses a specific detected risk flag.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UC3 PRA callout -->
+    <div class="card reveal reveal-delay-2" style="margin-top:24px; border-left:3px solid var(--purple);">
+      <div style="display:flex; gap:16px; align-items:flex-start;">
+        <div style="font-size:28px;">⬡</div>
+        <div>
+          <div class="label" style="margin-bottom:6px;">UC3 Only — Portfolio Risk Agent</div>
+          <h3 style="margin-bottom:8px; font-size:16px;">PRA — Portfolio Risk Agent</h3>
+          <p style="font-size:14px; line-height:1.75;">
+            The PRA is the only agent that uses the Knowledge Graph. It aggregates all WIA and MAA outputs
+            across the portfolio and queries the graph to detect cross-policy conflicts:
+            Workforce Overlap, Capacity Overload, Training Bottleneck, and Budget Concentration.
+            It computes a portfolio risk score and sector pressure map that are invisible when
+            analyzing policies individually.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- INTELLIGENCE LAYER                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="intelligence">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">Intelligence Layer</div>
+      <h2>Grounded in real Saudi data</h2>
+      <p class="section-subtitle">
+        Two intelligence systems make AgentNation's output specific, not generic.
+      </p>
+    </div>
+
+    <div class="intel-grid">
+      <div class="intel-card reveal reveal-delay-1">
+        <div class="intel-icon" style="background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.2);">🔍</div>
+        <div class="tag tag-blue" style="margin-bottom:16px;">RAG — Retrieval-Augmented Generation</div>
+        <h3 style="margin-bottom:12px;">44 curated Saudi policy documents</h3>
+        <p style="font-size:14px; line-height:1.8; margin-bottom:16px;">
+          Before each LLM call, the agent retrieves the 4–5 most relevant passages
+          from a document corpus embedded with Google text-embedding-004 and stored
+          in ChromaDB. Documents include Vision 2030 Annual Reports, HSTP, GASTAT
+          labor statistics, IMF Article IV, KAS Saudization reports, OECD benchmarks,
+          Singapore SkillsFuture, and ILO Arab States Employment Outlook.
+        </p>
+        <p style="font-size:13px; color:var(--text-muted);">
+          <strong style="color:var(--text);">Without RAG:</strong> "Assume training pipeline is sufficient."<br/>
+          <strong style="color:var(--text);">With RAG:</strong> "Healthcare training pipeline produces 8,000 nurses/year —
+          policy requires 3.2× this output, consistent with HSTP 2025 projections."
+        </p>
+      </div>
+
+      <div class="intel-card reveal reveal-delay-2">
+        <div class="intel-icon" style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.2);">⬡</div>
+        <div class="tag tag-purple" style="margin-bottom:16px;">Knowledge Graph — NetworkX</div>
+        <h3 style="margin-bottom:12px;">Sector relationship reasoning</h3>
+        <p style="font-size:14px; line-height:1.8; margin-bottom:16px;">
+          A purpose-built directed graph with four relationship layers:
+          Policy → Sector → Workforce Type → Training Institution, with
+          HAS_CAPACITY edges storing workforce supply data. The PRA queries
+          this graph to detect which policies share the same workforce pools
+          or compete for the same training institutions.
+        </p>
+        <p style="font-size:13px; color:var(--text-muted);">
+          <strong style="color:var(--text);">Without KG:</strong> Healthcare expansion looks fine in isolation.<br/>
+          <strong style="color:var(--text);">With KG:</strong> Two healthcare policies are competing for the same
+          medical college graduates — 14,300 per year vs 32,000 needed.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- TECH STACK                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="tech">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">Technology Stack</div>
+      <h2>Built for production</h2>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-layer reveal reveal-delay-1">
+        <div class="tech-layer-label">Frontend</div>
+        <div class="tech-items">
+          <div class="tech-item">React + Vite + TypeScript<span>Component-based dashboard UI</span></div>
+          <div class="tech-item">Tailwind CSS<span>Utility-first dark theme system</span></div>
+          <div class="tech-item">Framer Motion<span>Sequential agent pipeline animations</span></div>
+          <div class="tech-item">Recharts<span>Portfolio visualization charts</span></div>
+          <div class="tech-item">IBM Plex Mono + Syne<span>Typography system</span></div>
+        </div>
+      </div>
+
+      <div class="tech-layer reveal reveal-delay-2">
+        <div class="tech-layer-label">Backend</div>
+        <div class="tech-items">
+          <div class="tech-item">Python 3.12 + FastAPI<span>REST API with async support</span></div>
+          <div class="tech-item">Pydantic v2<span>Strict agent I/O schemas</span></div>
+          <div class="tech-item">Google Gemini 2.5 Flash<span>LLM for PAA, SGA, CAA, ORA</span></div>
+          <div class="tech-item">ChromaDB<span>Local vector store for RAG</span></div>
+          <div class="tech-item">NetworkX<span>Knowledge graph engine</span></div>
+        </div>
+      </div>
+
+      <div class="tech-layer reveal reveal-delay-3">
+        <div class="tech-layer-label">Intelligence</div>
+        <div class="tech-items">
+          <div class="tech-item">Google text-embedding-004<span>Document embedding for RAG</span></div>
+          <div class="tech-item">PyMuPDF + LangChain<span>PDF extraction and chunking</span></div>
+          <div class="tech-item">44 Policy Documents<span>Vision 2030, OECD, ILO, HSTP, IMF...</span></div>
+          <div class="tech-item">Simulation History<span>JSON log for UC3 portfolio input</span></div>
+          <div class="tech-item">Workforce DB (JSON)<span>Sector-level Saudi labor data</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- DESIGN PRINCIPLES                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading reveal">
+      <div class="label">Design Principles</div>
+      <h2>Why it's built this way</h2>
+    </div>
+
+    <div class="principles-grid">
+      <div class="principle-card reveal reveal-delay-1">
+        <span class="principle-number">01</span>
+        <h3>Human Authority Preserved</h3>
+        <p>No agent makes an autonomous decision. All outputs are explicitly labeled non-binding.
+           ORA in UC2 only runs when the user clicks a button. The system surfaces risks — humans decide actions.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-2">
+        <span class="principle-number">02</span>
+        <h3>Deterministic Core</h3>
+        <p>WIA, MAA, and COA are pure logic — no LLM calls. The risk score formula is published and auditable.
+           LLM failures fall back gracefully without breaking the pipeline.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-3">
+        <span class="principle-number">03</span>
+        <h3>System Restraint</h3>
+        <p>Path A skips MAA entirely when WIA metrics are clean. The system does not escalate without cause.
+           This is as important academically as Path C — it proves the system is not an alarmist.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-1">
+        <span class="principle-number">04</span>
+        <h3>80% Agent Reuse</h3>
+        <p>UC2 imports WIA and MAA directly from UC1. UC3 does the same. No code duplication.
+           This demonstrates modular, scalable architecture — new use cases cost 20% of the original effort.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-2">
+        <span class="principle-number">05</span>
+        <h3>Grounded in Saudi Context</h3>
+        <p>Every RAG document was selected for Saudi relevance — Vision 2030 milestones, GASTAT labor data,
+           HSTP targets, KAS Saudization reports. The system reasons about the right context, not generic assumptions.</p>
+      </div>
+      <div class="principle-card reveal reveal-delay-3">
+        <span class="principle-number">06</span>
+        <h3>Transparent by Design</h3>
+        <p>Every agent card in the dashboard expands to show its raw JSON output.
+           The reasoning chain from policy text to final recommendation is fully visible and auditable at every step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- TEAM                                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="team">
+  <div class="container">
+    <div class="section-heading reveal" style="text-align:center;">
+      <div class="label">The Team</div>
+      <h2>Built at Effat University</h2>
+      <p class="section-subtitle" style="margin: 12px auto 0;">
+        College of Engineering — Department of Computer Science<br/>
+        Senior Project
+      </p>
+    </div>
+
+    <div class="team-grid">
+      <!-- Celine -->
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-avatar">CH</div>
+        <div class="team-name">Celine Al Harake</div>
+        <div class="team-role">Co-Developer</div>
+        <div class="team-links">
+          <a href="mailto:celine.harake04@gmail.com" class="team-link">
+            <span class="team-link-icon">✉</span>
+            celine.harake04@gmail.com
+          </a>
+          <a href="www.linkedin.com/in/celine-al-harake-7710b1200" target="_blank" class="team-link">
+            <span class="team-link-icon">in</span>
+            linkedin.com/in/celine-alharake
+          </a>
+          <a href="https://celineharakee.github.io/portfolio/" target="_blank" class="team-link">
+            <span class="team-link-icon">☺︎</span>
+            personal portfolio
+          </a>
+        </div>
+      </div>
+
+      <!-- Layal -->
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-avatar">LC</div>
+        <div class="team-name">Layal Canoe</div>
+        <div class="team-role">Co-Developer</div>
+        <div class="team-links">
+          <a href="mailto:layalcanoe12@gmail.com" class="team-link">
+            <span class="team-link-icon">✉</span>
+            layalcanoe12@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/layal-canoe-a213792ab/" target="_blank" class="team-link">
+            <span class="team-link-icon">in</span>
+            linkedin.com/in/layal-canoe
+          </a>
+          <a href="https://layalcanoe.github.io" target="_blank" class="team-link">
+            <span class="team-link-icon">☺︎</span>
+            personal portfolio
+        </div>
+      </div>
+    </div>
+
+    <!-- Supervisor -->
+    <div class="supervisor-box reveal reveal-delay-3">
+      <div class="supervisor-label">Project Supervisor</div>
+      <div class="supervisor-name">Dr. Mohammad Nauman</div>
+      <div class="supervisor-dept">Department of Computer Science — Effat University</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                             -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="logo.png" alt="AgentNation" />
+        <span class="footer-brand">AgentNation</span>
+      </div>
+      <div class="footer-right">
+        <div>Effat University · College of Engineering</div>
+        <div style="margin-top:4px; color:var(--text-muted);">Senior Project</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- SCROLL REVEAL SCRIPT                                               -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
