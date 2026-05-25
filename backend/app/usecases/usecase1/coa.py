@@ -14,27 +14,28 @@ from usecases.usecase1.paa import run_paa
 from usecases.usecase1.wia import run_wia
 from usecases.usecase1.maa import run_maa
 from usecases.usecase1.ora import generate_alternatives
+from memory.history_manager import save_uc1_simulation   # ← history hook
 
 
 # ── Thresholds ────────────────────────────────────────────────────────────────
 
 # WIA threshold: if ALL of these are clear, skip MAA entirely (Path A early exit)
-WIA_PRESSURE_CLEAN     = 0.10   # workforce pressure index below this → no strain
-WIA_BUDGET_CLEAN       = 0.40   # budget stress ratio below this → comfortable
-WIA_TRAINING_CLEAN     = 0.75   # training capacity ratio below this → pipeline adequate
+WIA_PRESSURE_CLEAN  = 0.10   # workforce pressure index below this → no strain
+WIA_BUDGET_CLEAN    = 0.40   # budget stress ratio below this → comfortable
+WIA_TRAINING_CLEAN  = 0.75   # training capacity ratio below this → pipeline adequate
 
 # MAA thresholds for Path B vs Path C
-THRESHOLD_LOW          = 30.0
-THRESHOLD_MODERATE     = 60.0
+THRESHOLD_LOW       = 30.0
+THRESHOLD_MODERATE  = 60.0
 
 
 def _wia_is_clean(wia: WIAOutput) -> bool:
     """
     Returns True if WIA metrics are all well below risk thresholds,
-    meaning MAA escalation is not warranted (Scenario 1 / Path A early exit).
+    meaning MAA escalation is not warranted (Path A early exit).
     """
     return (
-        wia.workforce_pressure_index < WIA_PRESSURE_CLEAN
+        wia.workforce_pressure_index  < WIA_PRESSURE_CLEAN
         and wia.budget_stress_ratio   < WIA_BUDGET_CLEAN
         and wia.training_capacity_ratio < WIA_TRAINING_CLEAN
         and not wia.saudization_risk
@@ -46,40 +47,48 @@ def run_coa(user_input: UseCase1Input) -> FinalResponse:
     """
     Coordination & Oversight Agent (COA)
 
-    Orchestrates the pipeline with true scenario branching:
+    Orchestrates the UC1 pipeline with true scenario branching:
 
-      Scenario 1 (Path A — early exit):
+      Path A — early exit:
         PAA → WIA → COA
-        WIA is completely clean → skip MAA entirely.
-        This demonstrates system restraint: no AI overreaction.
+        WIA is completely clean → MAA skipped entirely.
+        Demonstrates system restraint.
 
-      Scenario 2 (Path B — monitor):
+      Path B — monitor:
         PAA → WIA → MAA → COA
         MAA flags risk but severity < 60 → ORA NOT triggered.
-        Human authority preserved: system identifies but does not act.
+        Human authority preserved.
 
-      Scenario 3 (Path C — mitigation):
+      Path C — mitigation:
         PAA → WIA → MAA → COA → ORA
         MAA severity ≥ 60 → ORA generates alternative policies.
         Full decision-support output produced.
+
+    Every completed run is saved to the simulation history log
+    via save_uc1_simulation() before being returned.
     """
 
     # ── Step 1: Always run PAA + WIA ─────────────────────────────────────────
     paa_output: PAAOutput = run_paa(user_input)
     wia_output: WIAOutput = run_wia(paa_output)
 
-    # ── Step 2: Option B — skip MAA if WIA is completely clean ───────────────
+    # ── Step 2: Path A — skip MAA if WIA is completely clean ─────────────────
     if _wia_is_clean(wia_output):
-        return _build_path_a_early(user_input, paa_output, wia_output)
+        result = _build_path_a_early(user_input, paa_output, wia_output)
+        save_uc1_simulation(result)   # ← save to history
+        return result
 
-    # ── Step 3: Run MAA (Scenarios 2 & 3) ────────────────────────────────────
+    # ── Step 3: Run MAA (Paths B & C) ────────────────────────────────────────
     maa_output: MAAOutput = run_maa(wia_output)
     severity = maa_output.severity_score
 
     if severity < THRESHOLD_MODERATE:
-        return _build_path_b(user_input, paa_output, wia_output, maa_output)
+        result = _build_path_b(user_input, paa_output, wia_output, maa_output)
     else:
-        return _build_path_c(user_input, paa_output, wia_output, maa_output)
+        result = _build_path_c(user_input, paa_output, wia_output, maa_output)
+
+    save_uc1_simulation(result)       # ← save to history
+    return result
 
 
 # ── Path builders ─────────────────────────────────────────────────────────────
@@ -90,13 +99,10 @@ def _build_path_a_early(
     wia_output: WIAOutput,
 ) -> FinalResponse:
     """
-    Scenario 1 — No Risk Detected (MAA skipped entirely).
-    Demonstrates system restraint.
+    Path A — No Risk Detected (MAA skipped entirely).
+    Demonstrates system restraint: no AI overreaction.
     """
     from usecases.usecase1.maa import _build_clean_maa_stub
-
-    # We still need a MAAOutput object for the response schema.
-    # We use a stub that clearly communicates MAA was not fully engaged.
     maa_stub = _build_clean_maa_stub()
 
     summary = (
@@ -141,8 +147,8 @@ def _build_path_b(
     maa_output: MAAOutput,
 ) -> FinalResponse:
     """
-    Scenario 2 — Risk Detected, No Action Taken.
-    MAA ran and flagged risks, but severity is below the action threshold.
+    Path B — Risk Detected, No Action Taken.
+    MAA ran and flagged risks, but severity is below the 60.0 action threshold.
     ORA is NOT triggered — human authority preserved.
     """
     severity = maa_output.severity_score
@@ -163,7 +169,11 @@ def _build_path_b(
     if wia_output.saudization_risk:
         pressure_issues.append("Saudization compliance concerns")
 
-    issues_text = ", ".join(pressure_issues) if pressure_issues else "moderate resource constraints"
+    issues_text = (
+        ", ".join(pressure_issues)
+        if pressure_issues
+        else "moderate resource constraints"
+    )
 
     summary = (
         f"Policy assessment complete. Risk severity score: {severity:.1f}/100 "
@@ -206,7 +216,7 @@ def _build_path_c(
     maa_output: MAAOutput,
 ) -> FinalResponse:
     """
-    Scenario 3 — Mitigation Required.
+    Path C — Mitigation Required.
     Full pipeline: MAA severity ≥ 60, ORA activated.
     """
     severity = maa_output.severity_score
@@ -228,7 +238,11 @@ def _build_path_c(
     if wia_output.saudization_risk:
         critical_issues.append("Saudization targets at risk")
 
-    issues_text = "; ".join(critical_issues) if critical_issues else "multiple high-severity constraints"
+    issues_text = (
+        "; ".join(critical_issues)
+        if critical_issues
+        else "multiple high-severity constraints"
+    )
 
     ora_output: ORAOutput = generate_alternatives(
         user_input=user_input,
